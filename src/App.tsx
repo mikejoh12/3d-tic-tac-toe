@@ -1,44 +1,35 @@
-import { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Euler, Vector3, Color } from 'three'
-import { Mesh } from 'three'
-
-interface BoxProps {
-  position: [number, number, number];
-  children?: React.ReactNode; // 👈️ for demo purposes
-}
-
-function Box(props: BoxProps) {
-  // This reference gives us direct access to the THREE.Mesh object
-  const ref = useRef<Mesh>(null!)
-  // Hold state for hovered and clicked events
-  const [hovered, hover] = useState(false)
-  const [clicked, click] = useState(false)
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (ref.current.rotation.x += 0.01))
-  // Return the view, these are regular Threejs elements expressed in JSX
-  return (
-    <mesh
-      {...props}
-      ref={ref}
-      scale={clicked ? 1.5 : 1}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-    </mesh>
-  )
-}
+import { useEffect, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import Box from './components/Box/Box';
+import { get3dBoard } from './helpers/get3dBoard';
+import { get4x4x4cube } from './helpers/get4x4x4cube';
+import { checkForWinner } from './helpers/checkForWinner';
 
 export default function App() {
+  const [cubeStates, setCubeStates] = useState<(string|null)[][][]>(get4x4x4cube());
+  const [isXsTurn, setIsXsTurn] = useState(true);
+  const cubePositions: number[][] = get3dBoard();
+
+  useEffect(() => {
+    const result = checkForWinner(cubeStates);
+    if (result) {
+      alert(`Game Over! The winner is: ${result}`);
+    }
+  }, [cubeStates]);
+
   return (
-    <Canvas>
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-      <pointLight position={[-10, -10, -10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
-    </Canvas>
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Canvas camera={{ fov: 70, position: [9, 7, 9]}}>
+        <ambientLight intensity={0.5} />
+        <spotLight position={[10, 10, 10]} angle={0.5} penumbra={.5} />
+        <pointLight position={[-10, -10, -10]} />
+        {cubePositions.map((pos) => <Box
+                                      position={[pos[0], pos[1], pos[2]]}
+                                      setCubeStates={setCubeStates}
+                                      isXsTurn={isXsTurn}
+                                      setIsXsTurn={setIsXsTurn}
+                                      cubeStates={cubeStates} />)}
+      </Canvas>
+    </div>
   )
 }
