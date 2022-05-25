@@ -5,11 +5,12 @@ interface BoxProps {
     position: [number, number, number];
     isXsTurn: boolean;
     setIsXsTurn: any;
+    isPlaying: boolean;
     cubeStates: (string|null)[][][];
     setCubeStates: any;
   }
   
-export default function Box({position, cubeStates, setCubeStates, isXsTurn, setIsXsTurn}: BoxProps) {
+export default function Box({position, cubeStates, setCubeStates, isXsTurn, setIsXsTurn, isPlaying}: BoxProps) {
     const [x,y,z] = position;
     const ref = useRef<Mesh>(null!)
     const [isHovered, setIsHovered] = useState(false)
@@ -18,7 +19,7 @@ export default function Box({position, cubeStates, setCubeStates, isXsTurn, setI
       event.stopPropagation();
       event.target.setPointerCapture(event.pointerId);
 
-      if (cubeStates[x][y][z]) return;
+      if (cubeStates[x][y][z] || !isPlaying) return;
       setCubeStates((prevState: any) => {
         const newGrid = [...prevState];
         newGrid[x][y][z] = isXsTurn ? 'X' : 'O';
@@ -42,7 +43,9 @@ export default function Box({position, cubeStates, setCubeStates, isXsTurn, setI
         <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? 'blue' : 
                                      cubeStates[x][y][z] === 'O' ? 'green' :
                                      isHovered ? 'yellow' : 
-                                     'gray'} />
+                                     'gray'}
+                              opacity={0.9}
+                              transparent />
       </mesh>
     )
 }
