@@ -43,7 +43,7 @@ export default function App() {
       <Box component="div">
         <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%"}}>
           <Canvas onCreated={(state) => state.gl.setClearColor("black")}>
-            <PerspectiveCamera makeDefault position={[0,0,25]}/>
+            <PerspectiveCamera makeDefault position={[0 , 30, 0]}/>
             <OrbitControls makeDefault enableZoom={false} enablePan={false}/>
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={.5} />
@@ -63,30 +63,31 @@ export default function App() {
         </Box>
 
         <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%", pointerEvents: "none"}}>
-              <Grid container direction="column" alignItems="end" justifyContent="center" sx={{height: '100%'}}>
-                <Grid item>
-                  <Box component="div" sx={{height: 300, pointerEvents: 'none'}}>
-                        <Slider sx={{
-                                  '& input[type="range"]': {
-                                    WebkitAppearance: 'slider-vertical',
-                                  },
-                                  pointerEvents: 'auto'
-                                }}
-                                orientation='vertical'
-                                defaultValue={0}
-                                min={-5}
-                                max={5}
-                                step={0.00001}
-                                onChange={handleAroundXangleChange} />
-                  </Box>
-                </Grid>
+                <Grid container item direction="column" alignItems="center" justifyContent="center" sx={{height: '100%'}}>
+                  <Grid item>
+                    <Box component="div" sx={{height: 200, pointerEvents: 'none'}}>
+                          <Slider sx={{
+                                    '& input[type="range"]': {
+                                      WebkitAppearance: 'slider-vertical',
+                                    },
+                                    pointerEvents: 'auto',
+                                    ml: 42
+                                  }}
+                                  orientation='vertical'
+                                  defaultValue={0}
+                                  min={-5}
+                                  max={5}
+                                  step={0.00001}
+                                  onChange={handleAroundXangleChange} />
+                    </Box>
+                  </Grid>
               </Grid>
         </Box>
 
           <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%", pointerEvents: "none"}}>
-                <Grid container direction="column" alignItems="center" justifyContent="end" sx={{height: '100%'}}>
+                <Grid container direction="column" alignItems="center" justifyContent="center" sx={{height: '100%'}}>
                   <Grid item>
-                    <Box component="div" sx={{ width: 300, pointerEvents: 'auto', mb: 10}}>
+                    <Box component="div" sx={{ width: 200, pointerEvents: 'auto', mt: 50}}>
                         <Slider defaultValue={0} min={-5} max={5} step={0.00001} onChange={handleAroundZangleChange} />
                     </Box>
                   </Grid>
