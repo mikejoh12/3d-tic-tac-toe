@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import { Group } from 'three';
 import Header from './components/Header/Header';
+import WelcomeDialog from './components/dialogs/WelcomeDialog';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
@@ -54,68 +55,69 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header />
-      <Box component="div">
-        <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%"}}>
-          <Canvas onCreated={(state) => state.gl.setClearColor("black")}>
-            <PerspectiveCamera makeDefault position={[0 , 30, 0]}/>
-            <OrbitControls makeDefault enableZoom={false} enablePan={false}/>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.5} penumbra={.5} />
-            <pointLight position={[-10, -10, -10]} />
-            
-            <group ref={group} rotation={[aroundXangle, aroundZangle, 0]} position={[0, 0, 0]}>
-              {cubePositions.map((pos) => <Cube
-                                            key={`${pos[0]}-${pos[1]}-${pos[2]}`}
-                                            position={[pos[0], pos[1], pos[2]]}
-                                            isPlaying={isPlaying}
-                                            cubeStates={cubeStates}
-                                            pendingCube={pendingCube}
-                                            setPendingCube={setPendingCube} />)}
-            </group>
-          </Canvas>
-        </Box>
+      <WelcomeDialog />
+      <Box component="div" sx={{position: 'absolute', zIndex: 1, width: '100%'}}>
+        <Header />
+      </Box>
+      <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%"}}>
+        <Canvas onCreated={(state) => state.gl.setClearColor("black")}>
+          <PerspectiveCamera makeDefault position={[0 , 30, 0]}/>
+          <OrbitControls makeDefault enableZoom={false} enablePan={false}/>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.5} penumbra={.5} />
+          <pointLight position={[-10, -10, -10]} />
+          
+          <group ref={group} rotation={[aroundXangle, aroundZangle, 0]} position={[0, 0, 0]}>
+            {cubePositions.map((pos) => <Cube
+                                          key={`${pos[0]}-${pos[1]}-${pos[2]}`}
+                                          position={[pos[0], pos[1], pos[2]]}
+                                          isPlaying={isPlaying}
+                                          cubeStates={cubeStates}
+                                          pendingCube={pendingCube}
+                                          setPendingCube={setPendingCube} />)}
+          </group>
+        </Canvas>
+      </Box>
+
+      <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%", pointerEvents: "none"}}>
+              <Grid container item direction="column" alignItems="center" justifyContent="center" sx={{height: '100%'}}>
+                <Grid item>
+                  <Box component="div" sx={{height: 200, pointerEvents: 'none'}}>
+                        <Slider sx={{
+                                  '& input[type="range"]': {
+                                    WebkitAppearance: 'slider-vertical',
+                                  },
+                                  pointerEvents: 'auto',
+                                  ml: 45
+                                }}
+                                orientation='vertical'
+                                defaultValue={0}
+                                min={-5}
+                                max={5}
+                                step={0.00001}
+                                onChange={handleAroundXangleChange} />
+                  </Box>
+                </Grid>
+            </Grid>
+      </Box>
 
         <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%", pointerEvents: "none"}}>
-                <Grid container item direction="column" alignItems="center" justifyContent="center" sx={{height: '100%'}}>
-                  <Grid item>
-                    <Box component="div" sx={{height: 200, pointerEvents: 'none'}}>
-                          <Slider sx={{
-                                    '& input[type="range"]': {
-                                      WebkitAppearance: 'slider-vertical',
-                                    },
-                                    pointerEvents: 'auto',
-                                    ml: 45
-                                  }}
-                                  orientation='vertical'
-                                  defaultValue={0}
-                                  min={-5}
-                                  max={5}
-                                  step={0.00001}
-                                  onChange={handleAroundXangleChange} />
-                    </Box>
-                  </Grid>
+              <Grid container direction="column" alignItems="center" justifyContent="center" sx={{height: '100%'}}>
+                <Grid item>
+                  <Box component="div" sx={{ width: 200, pointerEvents: 'auto', mt: 60}}>
+                      <Slider defaultValue={0} min={-5} max={5} step={0.00001} onChange={handleAroundZangleChange} />
+                  </Box>
+                </Grid>
+                <Grid item sx={{mt: 2, pointerEvents: 'auto'}}>
+                  { pendingCube &&
+                  <  Button variant="contained" onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'X':'O'} Cube</Button>
+                  }
+                  { winner &&
+                    <Button variant="contained">Game Over! Winner is {winner}</Button>
+                  }
+                </Grid>
               </Grid>
         </Box>
-
-          <Box component="div" sx={{position: 'absolute', width: "100%", height: "100%", pointerEvents: "none"}}>
-                <Grid container direction="column" alignItems="center" justifyContent="center" sx={{height: '100%', mt: 2}}>
-                  <Grid item>
-                    <Box component="div" sx={{ width: 200, pointerEvents: 'auto', mt: 50}}>
-                        <Slider defaultValue={0} min={-5} max={5} step={0.00001} onChange={handleAroundZangleChange} />
-                    </Box>
-                  </Grid>
-                  <Grid item sx={{mt: 2, pointerEvents: 'auto'}}>
-                    { pendingCube &&
-                    <  Button variant="contained" onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'X':'O'} Cube</Button>
-                    }
-                    { winner &&
-                      <Button variant="contained">Game Over! Winner is {winner}</Button>
-                    }
-                  </Grid>
-                </Grid>
-          </Box>
-      </Box>
     </div>
   )
 }
