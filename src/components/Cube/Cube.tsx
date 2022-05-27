@@ -3,14 +3,13 @@ import { Mesh } from 'three';
 
 interface BoxProps {
     position: [number, number, number];
-    isXsTurn: boolean;
-    setIsXsTurn: any;
     isPlaying: boolean;
     cubeStates: (string|null)[][][];
-    setCubeStates: any;
+    pendingCube: ([number, number, number]|null);
+    setPendingCube: any;
   }
   
-export default function Box({position, cubeStates, setCubeStates, isXsTurn, setIsXsTurn, isPlaying}: BoxProps) {
+export default function Box({position, cubeStates, isPlaying, pendingCube, setPendingCube}: BoxProps) {
     const [x,y,z] = position;
     const ref = useRef<Mesh>(null!)
     const [isHovered, setIsHovered] = useState(false)
@@ -20,12 +19,7 @@ export default function Box({position, cubeStates, setCubeStates, isXsTurn, setI
       event.target.setPointerCapture(event.pointerId);
 
       if (cubeStates[x][y][z] || !isPlaying) return;
-      setCubeStates((prevState: any) => {
-        const newGrid = [...prevState];
-        newGrid[x][y][z] = isXsTurn ? 'X' : 'O';
-        return newGrid;
-      });
-      setIsXsTurn((prevState: boolean) => !prevState);
+      setPendingCube([x,y,z]);
     }
 
     return (
@@ -42,10 +36,10 @@ export default function Box({position, cubeStates, setCubeStates, isXsTurn, setI
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? 'blue' : 
                                      cubeStates[x][y][z] === 'O' ? 'green' :
-                                     isHovered ? 'yellow' : 
+                                     isHovered ? 'yellow' :
+                                     pendingCube && pendingCube[0] === x && pendingCube[1] === y  && pendingCube[2] === z ? 'red' :
                                      'gray'}
-                              opacity={0.9}
-                              transparent />
+/>
       </mesh>
     )
 }

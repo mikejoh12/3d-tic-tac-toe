@@ -32,21 +32,21 @@ function get3dDiagonals(): number[][][] {
     ]
 }
 
-function checkLine(cube: (string|null)[][][], line: number[][]): string|boolean {
+function checkLine(cube: (string|null)[][][], line: number[][]): string|null {
     const ref = cube[line[0][0]][line[0][1]][line[0][2]];
-    if (ref === null) return false;
-    return line.every((pos) => cube[pos[0]][pos[1]][pos[2]] === ref) ? ref : false;
+    if (ref === null) return null;
+    return line.every((pos) => cube[pos[0]][pos[1]][pos[2]] === ref) ? ref : null;
 }
 
-function checkLines(cube: ((string|null)[][][]), lines: number[][][]): string|boolean {
+function checkLines(cube: ((string|null)[][][]), lines: number[][][]): string|null {
     for (let i = 0; i < lines.length; i++) {
         const result = checkLine(cube, lines[i]);
         if (result) return result;
     }
-    return false;
+    return null;
 }
 
-export function checkForWinner(cube: (string|null)[][][]): string|boolean {
+export function checkForWinner(cube: (string|null)[][][]): string|null {
     const lines = getStraightLines().concat(get3dDiagonals()).concat(getDiagonals());
     return checkLines(cube, lines);
 }
