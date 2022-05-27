@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import { Group } from 'three';
+import { theme } from './theme/theme';
+import { ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header/Header';
 import WelcomeDialog from './components/dialogs/WelcomeDialog';
 import Box from '@mui/material/Box';
@@ -54,7 +56,9 @@ export default function App() {
   };
 
   return (
-    <div className="app">
+    <>
+      <ThemeProvider theme={theme}>
+
       <WelcomeDialog />
       <Box component="div" sx={{position: 'absolute', zIndex: 1, width: '100%'}}>
         <Header />
@@ -118,6 +122,7 @@ export default function App() {
                 </Grid>
               </Grid>
         </Box>
-    </div>
+      </ThemeProvider>
+    </>
   )
 }
