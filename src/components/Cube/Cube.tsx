@@ -33,7 +33,7 @@ export default function Box({position, cubeStates, isPlaying, pendingCube, setPe
         }}
         onPointerOver={(event) => setIsHovered(true)}
         onPointerOut={(event) => setIsHovered(false)}>
-        <boxGeometry args={[1, 1, 1]} />
+        <boxGeometry args={[.8, .8, .8]} />
         <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? 'blue' : 
                                      cubeStates[x][y][z] === 'O' ? 'green' :
                                      isHovered ? 'yellow' :

@@ -14,6 +14,7 @@ import Cube from './components/Cube/Cube';
 import { get3dBoard } from './helpers/get3dBoard';
 import { get4x4x4cube } from './helpers/get4x4x4cube';
 import { checkForWinner } from './helpers/checkForWinner';
+import { Stack } from '@mui/material';
 
 export default function App() {
   const [cubeStates, setCubeStates] = useState<(string|null)[][][]>(get4x4x4cube());
@@ -35,6 +36,16 @@ export default function App() {
 
   const group = useRef<Group>(null!);
 
+  function restartGame() {
+    setCubeStates(get4x4x4cube());
+    setPendingCube(null);
+    setIsXsTurn(true);
+    setIsPlaying(true);
+    setAroundXangle(0);
+    setAroundZangle(0);
+    setWinner(null);
+  }
+
   function handlePlaceCubeClick() {
       if (!pendingCube) return;
       if (cubeStates[pendingCube[0]][pendingCube[1]][pendingCube[2]]) return;
@@ -47,11 +58,11 @@ export default function App() {
       setIsXsTurn((prevState: boolean) => !prevState);
   }
 
-  const handleAroundXangleChange = (event: Event, newValue: number | number[]) => {
+  function handleAroundXangleChange(event: Event, newValue: number | number[]) {
     setAroundXangle(newValue as number);
   };
 
-  const handleAroundZangleChange = (event: Event, newValue: number | number[]) => {
+  function handleAroundZangleChange(event: Event, newValue: number | number[]) {
     setAroundZangle(newValue as number);
   };
 
@@ -114,10 +125,13 @@ export default function App() {
                 </Grid>
                 <Grid item sx={{mt: 2, pointerEvents: 'auto'}}>
                   { pendingCube &&
-                  <  Button variant="contained" onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'X':'O'} Cube</Button>
+                  <  Button variant="contained" color={isXsTurn ? 'x' : 'o'} onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'X':'O'} Cube</Button>
                   }
                   { winner &&
+                  <Stack direction="column" spacing={2}>
                     <Button variant="contained">Game Over! Winner is {winner}</Button>
+                    <Button variant="contained" onClick={restartGame}>Play Again</Button>
+                  </Stack>
                   }
                 </Grid>
               </Grid>
