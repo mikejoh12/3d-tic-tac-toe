@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Cube from './components/Cube/Cube';
+import Typography from '@mui/material/Typography';
 import { get3dBoard } from './helpers/get3dBoard';
 import { get4x4x4cube } from './helpers/get4x4x4cube';
 import { checkForWinner } from './helpers/checkForWinner';
@@ -84,7 +85,7 @@ export default function App() {
                   }
                   { winner &&
                   <Stack direction="column" spacing={2}>
-                    <Button variant="contained">Game Over! Winner is {winner}</Button>
+                    <Typography variant="h5" color="primary">Game Over! Winner is {winner}</Typography>
                     <Button variant="contained" onClick={restartGame}>Play Again</Button>
                   </Stack>
                   }
