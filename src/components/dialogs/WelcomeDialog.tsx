@@ -24,8 +24,7 @@ export default function AlertDialog() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography>
-            This is a 3D Tic-Tac-Toe game. You win by getting 4 in a row either in a straight line,
-            diagonally on any surface, or diagonally from corner to corner.
+            You win by getting 4 in a row either in a straight line, diagonally on any surface, or diagonally from corner to corner.
           </Typography>
 
           <Typography sx={{mt: 3}}>
