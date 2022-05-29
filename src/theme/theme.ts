@@ -1,8 +1,7 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { green, purple } from '@mui/material/colors';
 
-
-export const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: purple[500],
@@ -18,6 +17,8 @@ export const theme = createTheme({
     }
   },
 });
+
+theme = responsiveFontSizes(theme);
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -39,3 +40,5 @@ declare module '@mui/material/Button' {
     o: true;
   }
 }
+
+export { theme };

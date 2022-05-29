@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useThree } from '@react-three/fiber';
 import { Mesh } from 'three';
 
 interface BoxProps {
@@ -12,7 +13,7 @@ interface BoxProps {
 export default function Box({position, cubeStates, isPlaying, pendingCube, setPendingCube}: BoxProps) {
     const [x,y,z] = position;
     const ref = useRef<Mesh>(null!)
-    const [isHovered, setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(false);
 
     function handlePointerDown(event: any) {
       event.stopPropagation();

@@ -6,17 +6,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 
-export default function AlertDialog() {
-  const [open, setOpen] = React.useState(true);
+interface WelcomeDialogProps {
+  isOpen: boolean;
+  closeWelcomeDialog: any;
+}
+
+export default function WelcomeDialog({isOpen, closeWelcomeDialog}: WelcomeDialogProps) {
 
   const handleClose = () => {
-    setOpen(false);
+    closeWelcomeDialog();
   };
 
   return (
     <div>
       <Dialog
-        open={open}
+        open={isOpen}
         onClose={handleClose}
       >
         <DialogTitle>
@@ -28,11 +32,11 @@ export default function AlertDialog() {
           </Typography>
 
           <Typography sx={{mt: 3}}>
-            Turn the cube by using the slider controls or drag the background outside of the cube.
+            Turn the camera around the cube by left-clicking and dragging the background outside of the cube. For touch-screens, drag the screen to rotate the cube. 
           </Typography>
 
           <Typography sx={{mt: 3}}>
-            Select a small cube to make a preliminary placement. Press the blue "PLACE CUBE" button to confirm and place the X or O
+            Select a small cube to make a preliminary placement. Press the "PLACE CUBE" button to confirm and place the X or O
             in the selected spot.
           </Typography>
         </DialogContent>
