@@ -37,8 +37,7 @@ export default function WelcomeDialog({isOpen, closeWelcomeDialog}: WelcomeDialo
           </Typography>
 
           <Typography sx={{mt: 3}}>
-            Select a small cube to make a preliminary placement. Press the "PLACE CUBE" button to confirm and place the X or O
-            in the selected spot.
+            Select a small cube to make a preliminary placement. Press the "PLACE CUBE" button to confirm and place the green or red cube.
           </Typography>
         </DialogContent>
 
