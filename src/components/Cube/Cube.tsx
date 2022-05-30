@@ -44,10 +44,10 @@ export default function Cube({position, cubeStates, isPlaying, pendingCube, setP
       palette: Palette
     ): string {
         const cubeState = cubeStates[x][y][z];
-        if (cubeState === 'X') {
-          return palette.x.main;
-        } else if (cubeState === 'O') {
-          return palette.o.main;
+        if (cubeState === 'green') {
+          return palette.green.main;
+        } else if (cubeState === 'red') {
+          return palette.red.main;
         } else if (isHovered) {
           return 'yellow';
         } else if (isPendingCube(position, gameStatus.pendingCube)) {

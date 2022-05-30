@@ -8,10 +8,10 @@ let theme = createTheme({
     secondary: {
       main: '#37D1E9',
     },
-    x: {
+    green: {
       main: '#37E94F',
     },
-    o: {
+    red: {
       main: '#E94F37',
     }
   },
@@ -21,22 +21,22 @@ theme = responsiveFontSizes(theme);
 
 declare module '@mui/material/styles' {
   interface Palette {
-    x: Palette['primary'];
-    o: Palette['primary'];
+    green: Palette['primary'];
+    red: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
-    x?: PaletteOptions['primary'];
-    o?: PaletteOptions['primary'];
+    green?: PaletteOptions['primary'];
+    red?: PaletteOptions['primary'];
   }
 }
 
 // Update the Button's color prop options
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
-    x: true;
-    o: true;
+    green: true;
+    red: true;
   }
 }
 

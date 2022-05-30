@@ -41,7 +41,7 @@ function checkLine(cube: (string|null)[][][], line: number[][]): string|null {
 function checkLines(cube: ((string|null)[][][]), lines: number[][][]): string|null {
     for (let i = 0; i < lines.length; i++) {
         const result = checkLine(cube, lines[i]);
-        if (result) return 'x' ? 'Red' : 'Green';
+        if (result) return result === 'red' ? 'Red' : 'Green';
     }
     return null;
 }

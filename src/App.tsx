@@ -19,7 +19,7 @@ export default function App() {
   const [welcomeDialogIsOpen, setWelcomeDialogIsOpen] = useState<boolean>(true);
   const [cubeStates, setCubeStates] = useState<(string|null)[][][]>(get4x4x4cube());
   const [pendingCube, setPendingCube] = useState<[number, number, number]|null>(null);
-  const [isXsTurn, setIsXsTurn] = useState<boolean>(true);
+  const [isGreensTurn, setIsGreensTurn] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [winner, setWinner] = useState<string|null>(null);
   const cubePositions: number[][] = get3dBoard();
@@ -37,7 +37,7 @@ export default function App() {
   function restartGame() {
     setCubeStates(get4x4x4cube());
     setPendingCube(null);
-    setIsXsTurn(true);
+    setIsGreensTurn(true);
     setIsPlaying(true);
     setWinner(null);
     setWelcomeDialogIsOpen(true);
@@ -48,11 +48,11 @@ export default function App() {
       if (cubeStates[pendingCube[0]][pendingCube[1]][pendingCube[2]]) return;
       setCubeStates((prevState: any) => {
         const newGrid = [...prevState];
-        newGrid[pendingCube[0]][pendingCube[1]][pendingCube[2]] = isXsTurn ? 'X' : 'O';
+        newGrid[pendingCube[0]][pendingCube[1]][pendingCube[2]] = isGreensTurn ? 'green' : 'red';
         return newGrid;
       });
       setPendingCube(null);
-      setIsXsTurn((prevState: boolean) => !prevState);
+      setIsGreensTurn((prevState: boolean) => !prevState);
   }
 
   return (
@@ -87,7 +87,7 @@ export default function App() {
           <Grid container direction="column" alignItems="center" justifyContent="end" sx={{height: '100%'}}>
             <Grid item sx={{pointerEvents: 'auto', mb: 4}}>
               { pendingCube &&
-              <  Button variant="contained" color={isXsTurn ? 'x' : 'o'} onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'Green':'Red'} Cube</Button>
+              <  Button variant="contained" color={isGreensTurn ? 'green' : 'red'} onClick={handlePlaceCubeClick}>Place {isGreensTurn ? 'Green':'Red'} Cube</Button>
               }
               { winner &&
               <Stack direction="column" spacing={2}>
