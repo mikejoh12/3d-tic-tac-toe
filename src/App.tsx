@@ -87,7 +87,7 @@ export default function App() {
           <Grid container direction="column" alignItems="center" justifyContent="end" sx={{height: '100%'}}>
             <Grid item sx={{pointerEvents: 'auto', mb: 4}}>
               { pendingCube &&
-              <  Button variant="contained" color={isXsTurn ? 'x' : 'o'} onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'X':'O'} Cube</Button>
+              <  Button variant="contained" color={isXsTurn ? 'x' : 'o'} onClick={handlePlaceCubeClick}>Place {isXsTurn ? 'Green':'Red'} Cube</Button>
               }
               { winner &&
               <Stack direction="column" spacing={2}>

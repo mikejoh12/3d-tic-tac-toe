@@ -51,7 +51,7 @@ export default function Cube({position, cubeStates, isPlaying, pendingCube, setP
         } else if (isHovered) {
           return 'yellow';
         } else if (isPendingCube(position, gameStatus.pendingCube)) {
-          return 'orange';
+          return palette.grey[800];
         } else {
           return 'gray';
         }

@@ -3,13 +3,13 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#44BBA4',
+      main: '#4F37E9',
     },
     secondary: {
-      main: '#3F88C5',
+      main: '#37D1E9',
     },
     x: {
-      main: '#F6F7EB',
+      main: '#37E94F',
     },
     o: {
       main: '#E94F37',

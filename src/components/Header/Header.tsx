@@ -18,8 +18,7 @@ export default function ButtonAppBar() {
              target="_blank"
              rel="noreferrer noopener">
             <IconButton
-                size="large"
-                color="inherit">
+                size="large">
                 <GitHub />
             </IconButton>
           </a>
