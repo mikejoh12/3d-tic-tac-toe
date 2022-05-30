@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Mesh } from 'three';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Palette } from '@mui/material/styles';
 
 interface BoxProps {
     position: [number, number, number];
@@ -10,18 +10,51 @@ interface BoxProps {
     setPendingCube: any;
   }
   
-export default function Box({position, cubeStates, isPlaying, pendingCube, setPendingCube}: BoxProps) {
+export default function Cube({position, cubeStates, isPlaying, pendingCube, setPendingCube}: BoxProps) {
     const [x,y,z] = position;
     const ref = useRef<Mesh>(null!)
     const [isHovered, setIsHovered] = useState(false);
     const theme = useTheme();
 
-    function handlePointerDown(event: any) {
+    function handlePointerDown(event: any): void {
       event.stopPropagation();
       event.target.setPointerCapture(event.pointerId);
 
       if (cubeStates[x][y][z] || !isPlaying) return;
       setPendingCube([x,y,z]);
+    }
+
+    function isPendingCube(
+      position: [number, number, number],
+      pendingCube: [number, number, number]|null
+    ): boolean {
+      return position.length === pendingCube?.length &&
+             position.every((element, index) => element === pendingCube[index]);
+    }
+
+    interface GameStatus {
+      cubeStates: (string|null)[][][];
+      isHovered: boolean;
+      pendingCube: [number, number, number]|null;
+    }
+
+    function getCubeColor(
+      position: [number, number, number],
+      gameStatus: GameStatus,
+      palette: Palette
+    ): string {
+        const cubeState = cubeStates[x][y][z];
+        if (cubeState === 'X') {
+          return palette.x.main;
+        } else if (cubeState === 'O') {
+          return palette.o.main;
+        } else if (isHovered) {
+          return 'yellow';
+        } else if (isPendingCube(position, gameStatus.pendingCube)) {
+          return 'orange';
+        } else {
+          return 'gray';
+        }
     }
 
     return (
@@ -37,11 +70,7 @@ export default function Box({position, cubeStates, isPlaying, pendingCube, setPe
         onPointerOut={(event) => setIsHovered(false)}>
         <boxGeometry args={[.8, .8, .8]} />
 
-        <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? theme.palette.x.main : 
-                                     cubeStates[x][y][z] === 'O' ? theme.palette.o.main :
-                                     isHovered ? 'yellow' :
-                                     pendingCube && pendingCube[0] === x && pendingCube[1] === y  && pendingCube[2] === z ? 'orange' :
-                                     'gray'}/>
+        <meshStandardMaterial color={getCubeColor(position, {cubeStates, isHovered, pendingCube}, theme.palette)}/>
       </mesh>
     )
 }

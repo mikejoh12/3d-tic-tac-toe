@@ -26,6 +26,7 @@ export default function WelcomeDialog({isOpen, closeWelcomeDialog}: WelcomeDialo
         <DialogTitle>
           3D Tic-Tac-Toe
         </DialogTitle>
+        
         <DialogContent dividers>
           <Typography>
             You win by getting 4 in a row either in a straight line, diagonally on any surface, or diagonally from corner to corner.
@@ -40,6 +41,7 @@ export default function WelcomeDialog({isOpen, closeWelcomeDialog}: WelcomeDialo
             in the selected spot.
           </Typography>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose} variant="contained">
             Start Game

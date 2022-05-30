@@ -12,7 +12,7 @@ interface CubeGroupProps {
     setPendingCube: any;
   }
   
-export default function Box({cubeStates, cubePositions, isPlaying, pendingCube, setPendingCube}: CubeGroupProps) {
+export default function CubeGroup({cubeStates, cubePositions, isPlaying, pendingCube, setPendingCube}: CubeGroupProps) {
 
     const group = useRef<Group>(null!);
     const { viewport } = useThree();
