@@ -1,19 +1,18 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { green, purple } from '@mui/material/colors';
 
 let theme = createTheme({
   palette: {
     primary: {
-      main: purple[500],
+      main: '#44BBA4',
     },
     secondary: {
-      main: green[500],
+      main: '#3F88C5',
     },
     x: {
-      main: 'blue',
+      main: '#F6F7EB',
     },
     o: {
-      main: 'green'
+      main: '#E94F37'
     }
   },
 });
