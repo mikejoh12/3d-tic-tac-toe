@@ -73,11 +73,13 @@ export default function App() {
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={.5} />
             <pointLight position={[-10, -10, -10]} />
             
-            <CubeGroup            isPlaying={isPlaying}
-                                  cubeStates={cubeStates}
-                                  cubePositions={cubePositions}
-                                  pendingCube={pendingCube}
-                                  setPendingCube={setPendingCube}/>
+            <ThemeProvider theme={theme}>
+              <CubeGroup            isPlaying={isPlaying}
+                                    cubeStates={cubeStates}
+                                    cubePositions={cubePositions}
+                                    pendingCube={pendingCube}
+                                    setPendingCube={setPendingCube}/>
+            </ThemeProvider>
           </Canvas>
         </Box>
 

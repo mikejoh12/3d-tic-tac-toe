@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { Mesh } from 'three';
-// import { Color } from 'three'; 
-// import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 interface BoxProps {
     position: [number, number, number];
@@ -15,7 +14,7 @@ export default function Box({position, cubeStates, isPlaying, pendingCube, setPe
     const [x,y,z] = position;
     const ref = useRef<Mesh>(null!)
     const [isHovered, setIsHovered] = useState(false);
-    // const theme = useTheme();
+    const theme = useTheme();
 
     function handlePointerDown(event: any) {
       event.stopPropagation();
@@ -38,8 +37,8 @@ export default function Box({position, cubeStates, isPlaying, pendingCube, setPe
         onPointerOut={(event) => setIsHovered(false)}>
         <boxGeometry args={[.8, .8, .8]} />
 
-        <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? 'blue' : 
-                                     cubeStates[x][y][z] === 'O' ? 'green' :
+        <meshStandardMaterial color={cubeStates[x][y][z] === 'X' ? theme.palette.x.main : 
+                                     cubeStates[x][y][z] === 'O' ? theme.palette.o.main :
                                      isHovered ? 'yellow' :
                                      pendingCube && pendingCube[0] === x && pendingCube[1] === y  && pendingCube[2] === z ? 'orange' :
                                      'gray'}/>

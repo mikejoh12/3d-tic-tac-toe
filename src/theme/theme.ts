@@ -12,7 +12,7 @@ let theme = createTheme({
       main: '#F6F7EB',
     },
     o: {
-      main: '#E94F37'
+      main: '#E94F37',
     }
   },
 });
