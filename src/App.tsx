@@ -27,6 +27,7 @@ export default function App() {
   const closeWelcomeDialog = () => setWelcomeDialogIsOpen(false);
 
   useEffect(() => {
+    console.log('cubeStates ', cubeStates);
     const result = checkForWinner(cubeStates);
     if (result) {
       setIsPlaying(false);
